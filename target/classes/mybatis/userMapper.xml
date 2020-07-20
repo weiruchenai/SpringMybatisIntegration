@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--映射配置文件-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace用于隔离SQL语句，后期会有其他作用-->
+<!--/*这里#{}表示占位符，后面调用时会根据函数传入值获取到不同的id*/-->
+<mapper namespace="com.mybatistest.UserDao">
+    <!--
+        id : sql id，sql语句的唯一标识符
+        parameterType: 入参的数据类型
+        resultType: 返回结果的数据类型
+        最后一句的#{}表示占位符，后面调用时会根据函数传入值获取到不同的id
+    -->
+    <!--根据ID查找用户-->
+    <select id="getUserById" parameterType="int" resultType="com.pojo.User">
+        SELECT
+		`id`,
+		`username`,
+		`birthday`,
+		`sex`,
+		`address`
+        FROM `user`
+        WHERE id = #{id}
+    </select>
+
+    <!--根据用户名模糊查找-->
+    <select id="getUserByName" parameterType="string" resultType="com.pojo.User">
+        SELECT
+        `id`,
+        `username`,
+        `birthday`,
+        `sex`,
+        `address`
+        FROM `user`
+        WHERE username LIKE #{username}
+    </select>
+
+    <!--插入用户-->
+    <insert id="insertUser" parameterType="com.pojo.User">
+        INSERT INTO `user` ( `username`, `birthday`, `sex`, `address` )
+        VALUES
+        ( #{username},
+          #{birthday},
+          #{sex},
+          #{address});
+    </insert>
+</mapper>
+
